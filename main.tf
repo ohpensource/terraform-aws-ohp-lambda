@@ -51,22 +51,29 @@ resource "aws_iam_role" "lambda" {
   tags                            = length(var.role_tags) > 0 ? merge(var.tags, var.role_tags) : var.tags
 }
 
-# resource "aws_iam_role_policy_attachment" "assume_role" {
-#   count         = local.create_role ? 1 : 0
-#   role          = aws_iam_role.lambda[0].name
-#   policy_arn    = join("", data.aws_iam_policy_document.assume_role.*.json) #"arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
-# }
+resource "aws_iam_policy" "logs" {
+  count      = local.create_role ? 1 : 0
+  name       = "${var.function_name}-logs-policy"
+  policy     = local.cloudwatch_policy_arn
+}
+
+resource "aws_iam_policy" "s3" {
+  count      = local.s3_policy_arn != null ? 1 : 0 
+  name       = "${var.function_name}-s3-policy"
+  policy     = local.s3_policy_arn
+}
 
 resource "aws_iam_role_policy_attachment" "logs" {
   count      = local.create_role ? 1 : 0 #local.cloudwatch_policy_arn != null ? 1 : 0
   #name       = "${local.role_name}-logs"
-  role      = aws_iam_role.lambda[0].name
-  policy_arn = local.cloudwatch_policy_arn
+  role       = aws_iam_role.lambda[0].name
+  policy_arn = aws_iam_policy.logs[0].arn
+  
 }
 
 resource "aws_iam_role_policy_attachment" "s3" {
-  count      = local.s3_policy_arn != null ? 1 : 0
+  count       = local.s3_policy_arn != null ? 1 : 0 
   #name       = "${local.role_name}-s3"
-  role      = aws_iam_role.lambda[0].name
-  policy_arn = local.s3_policy_arn
+  role        = aws_iam_role.lambda[0].name
+  policy_arn  = aws_iam_policy.s3[0].arn
 }
