@@ -33,6 +33,21 @@ data "aws_iam_policy_document" "vpcAccessExecution" {
   }
 }
 
+data "aws_iam_policy_document" "kmsDecrypt" {
+  count = var.kms_key_arn != null && var.kms_key_arn != "" ? 1 : 0
+  statement {
+    effect    = "Allow"
+    actions   = ["kms:Decrypt"]
+    resources = var.kms_key_arn
+    condition {
+      test = "StringEquals"
+      variable = "kms:EncryptionContext:LambdaFunctionName"
+      value : var.function_name
+      
+    }
+  }
+}
+
 data "aws_iam_policy_document" "s3" {
   count = var.s3_existing_package != null && local.create_role ? 1 : 0
   statement {

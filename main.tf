@@ -69,6 +69,12 @@ resource "aws_iam_policy" "s3" {
   policy = local.s3_policy_arn
 }
 
+resource "aws_iam_policy" "kmsKey" {
+  count  = var.kms_key_arn != null && var.kms_key_arn != "" ? 1 : 0
+  name   = "${var.function_name}-kmsDecrypt-policy"
+  policy = join("", data.aws_iam_policy_document.kmsDecrypt.*.json)
+}
+
 resource "aws_iam_role_policy_attachment" "vpcAccessExecution" {
   count      = local.create_role && length(coalesce(var.vpc_subnet_ids, [])) >= 1 ? 1 : 0
   role       = aws_iam_role.lambda[0].name
@@ -89,4 +95,10 @@ resource "aws_iam_role_policy_attachment" "s3" {
   #name       = "${local.role_name}-s3"
   role       = aws_iam_role.lambda[0].name
   policy_arn = aws_iam_policy.s3[0].arn
+}
+
+resource "aws_iam_role_policy_attachment" "kmsKey" {
+  count = var.kms_key_arn != null && var.kms_key_arn != "" ? 1 : 0
+  role       = aws_iam_role.lambda[0].name
+  policy_arn = aws_iam_policy.kmsKey[0].arn
 }
