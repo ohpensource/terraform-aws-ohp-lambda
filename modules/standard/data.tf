@@ -16,8 +16,8 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 data "aws_iam_policy_document" "logs" {
-    count = local.create_role && var.create_cloudwatch_log_group ? 1 : 0 
-statement {
+  count = local.create_role && var.create_cloudwatch_log_group ? 1 : 0
+  statement {
     effect    = "Allow"
     actions   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
     resources = ["arn:aws:logs:${local.account_id}:*:*"]
@@ -25,8 +25,8 @@ statement {
 }
 
 data "aws_iam_policy_document" "s3" {
-    count = var.s3_existing_package != null && local.create_role ? 1 : 0 
-statement {
+  count = var.s3_existing_package != null && local.create_role ? 1 : 0
+  statement {
     effect    = "Allow"
     actions   = ["s3:PutObject", "s3:Get*", "s3:List*"]
     resources = ["arn:aws:s3:::${local.s3_bucket}", "arn:aws:s3:::${local.s3_bucket}/*"]
