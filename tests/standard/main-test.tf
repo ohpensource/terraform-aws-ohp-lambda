@@ -45,7 +45,7 @@ module "lambda_function" {
   #role_name                         = 
   create_role                       = true #optional setting to create role. Creates the polices for the various options (s3/cloudwatch/assume_role).    function_name                     = "function_name"
   function_name                     = "Weather_API"
-  handler                           = "GetWeather_lambda.lambda_handler"
+  handler                           = "lambda.lambda_handler"
   runtime                           = "python3.8"
   memory_size                       = 256                                                  #default is 128
   timeout                           = 5                                                    #default is 3
@@ -60,12 +60,12 @@ module "lambda_function" {
   }
 
   s3_existing_package = {
-    bucket = "abartlaws-code" #  Optional to specify s3 bucket and key where .zip lambda function is located
-    key    = "GetWeather_lambda.zip"
+    bucket = "s3-code" #  Optional to specify s3 bucket and key where .zip lambda function is located
+    key    = "code_lambda.zip"
   }
 
-  vpc_security_group_ids = ["sg-04c82e608d1df0983"]                                 #   Optional to set if Lambda is running in a vpc
-  vpc_subnet_ids         = ["subnet-058900279835c8912", "subnet-0346e51de23da20c3"] # Optional to set if Lambda is running in a vpc
+  vpc_security_group_ids = ["sg-04c82e608d1df0111"]                                 #   Optional to set if Lambda is running in a vpc
+  vpc_subnet_ids         = ["subnet-058900279835c8111", "subnet-0346e51de23da2111"] # Optional to set if Lambda is running in a vpc
   tags = {
     Terraform   = "true"
     Environment = "default"
