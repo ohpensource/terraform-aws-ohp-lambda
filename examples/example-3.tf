@@ -1,0 +1,35 @@
+# example 3 - create function with new role creation with s3 bucket .zip. In vpc) 
+
+module "lambda_function" {
+  source                            = "git::https://bitbucket.org/ohpen-dev/terraform-aws-ohp-lambda.git"
+  create_function                   = true #Set to true to create lambda function
+  create_role                       = true #optional setting to create role. Creates the polices for the various options (s3/cloudwatch/assume_role).    function_name                     = "function_name"
+  function_name                     = "function_name"
+  handler                           = "testscript.lambda_handler"
+  runtime                           = "python3.7"
+  memory_size                       = 256                                                  #default is 128
+  timeout                           = 5                                                    #default is 3
+  tracing_mode                      = "Active"                                             # (Optional. Options are Active or PassThrough. Default is Null
+  reserved_concurrent_executions    = 5                                                    # Default is -1 (disabled)
+  create_cloudwatch_log_group       = true                                                 # Create Log for the function. 
+  cloudwatch_logs_retention_in_days = 30                                                   # Default is 90
+  cloudwatch_logs_kms_key_id        = "arn:aws:kms:eu-west-1:0611111111:key/1232432435435" #default is Null
+
+  environment_variables = {
+    Serverless = "Terraform" #Optional Env Vars
+  }
+
+  s3_existing_package = {
+    bucket = "bucketcode" # Optional to specify s3 bucket and key where .zip lambda function is located
+    key    = "testscript.zip"
+  }
+
+  vpc_security_group_ids = ["sg-04c82e608d1df0983"]                                 # Optional to set if Lambda is running in a vpc
+  vpc_subnet_ids         = ["subnet-058900279835c8912", "subnet-0346e51de23da20c3"] # Optional to set if Lambda is running in a vpc
+  tags = {
+    Terraform   = "true"
+    Environment = "default"
+    Account_ID  = data.aws_caller_identity.current.account_id # Tags example
+    Created_by  = data.aws_caller_identity.current.arn
+  }
+}
