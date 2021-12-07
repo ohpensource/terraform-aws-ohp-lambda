@@ -93,8 +93,8 @@ function getUpdatedVersion(version, changes) {
   } else {
     newMajor = major;
     newMinor = minor;
-    newPatch = patch;
-    newSecondary = secondary + 1;
+    newPatch = patch + 1;
+    newSecondary = 0;
   }
 
   return `${newMajor}.${newMinor}.${newPatch}`;

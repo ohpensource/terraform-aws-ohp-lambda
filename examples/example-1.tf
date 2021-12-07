@@ -1,7 +1,7 @@
 # Usage (example 1 - create function without new role creation with local .zip. no vpc)
 
 module "lambda_function" {
-  source                            = "git::https://bitbucket.org/ohpen-dev/terraform-aws-ohp-lambda.git"
+  source                            = "github.com/ohpensource/terraform-aws-ohp-org-lambda//modules//standard?ref=v0.1.1"
   create_function                   = true                                                        #Set to true to create lambda function
   role_name                         = "arn:aws:iam::720578572654:role/service-role/existing_role" # Exisiting Role name for the function
   function_name                     = "function_name"
