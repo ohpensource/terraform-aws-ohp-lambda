@@ -11,6 +11,7 @@ resource "aws_lambda_function" "default" {
   filename                       = local.filename
   memory_size                    = var.memory_size
   reserved_concurrent_executions = var.reserved_concurrent_executions
+  layers                         = var.layers
   tags                           = length(var.lambda_tags) > 0 ? merge(var.tags, var.lambda_tags) : var.tags
 
   dynamic "vpc_config" {

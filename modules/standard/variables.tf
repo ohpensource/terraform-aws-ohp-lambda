@@ -138,3 +138,9 @@ variable "cloudwatch_logs_kms_key_id" {
   type        = string
   default     = null
 }
+
+variable "layers" {
+  description = "(Optional) List of Lambda Layer Version ARNs (maximum of 5) to attach to your Lambda Function"
+  type        = list(any)
+  default     = null
+}
