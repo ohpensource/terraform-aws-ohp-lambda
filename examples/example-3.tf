@@ -1,7 +1,7 @@
 # example 3 - create function with new role creation with s3 bucket .zip. In vpc) 
 
 module "lambda_function" {
-  source                            = "github.com/ohpensource/terraform-aws-ohp-org-lambda//modules//standard?ref=v0.1.1"
+  source                            = "git::https://github.com/ohpensource/terraform-aws-ohp-lambda.git//modules//standard?ref=v0.1.1"
   create_function                   = true #Set to true to create lambda function
   create_role                       = true #optional setting to create role. Creates the polices for the various options (s3/cloudwatch/assume_role).    function_name                     = "function_name"
   function_name                     = "function_name"
