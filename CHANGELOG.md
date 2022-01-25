@@ -1,3 +1,9 @@
+# :confetti_ball: 0.0.4 (2022-01-25T11:13:32.729Z)
+- - -
+## :bug: Fixes
+* SPT-1 - cloudwatch resource is missing region in arn (#4)
+- - -
+- - -
 # :confetti_ball: 0.0.3 (2021-12-15T11:01:32.003Z)
 - - -
 ## :newspaper: Others
