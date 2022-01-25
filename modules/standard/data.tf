@@ -20,7 +20,7 @@ data "aws_iam_policy_document" "logs" {
   statement {
     effect    = "Allow"
     actions   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
-    resources = ["arn:aws:logs:${local.account_id}:*:*"]
+    resources = ["arn:aws:logs:${data.aws_region.current.name}:${local.account_id}:*:*"]
   }
 }
 
