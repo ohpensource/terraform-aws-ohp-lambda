@@ -1,3 +1,9 @@
+# :confetti_ball: 0.0.5 (2022-02-09T16:21:51.232Z)
+- - -
+## :newspaper: Others
+* ci: LANZ-1651 adding cd workflow with semver (#7)
+- - -
+- - -
 # :confetti_ball: 0.0.4 (2022-01-25T11:13:32.729Z)
 - - -
 ## :bug: Fixes
