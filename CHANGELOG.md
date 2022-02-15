@@ -1,3 +1,9 @@
+# :confetti_ball: 0.0.6 (2022-02-15T12:11:41.602Z)
+- - -
+## :bug: Fixes
+* LANZ-1673 manage artifacts version properly using s3_object_version (#9)
+- - -
+- - -
 # :confetti_ball: 0.0.5 (2022-02-09T16:21:51.232Z)
 - - -
 ## :newspaper: Others
