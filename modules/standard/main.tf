@@ -1,13 +1,24 @@
+data "aws_s3_bucket_object" "artifact" {
+  count = var.s3_existing_package != null ? 1 : 0
+
+  bucket = local.s3_bucket
+  key    = local.s3_key
+}
+
 resource "aws_lambda_function" "default" {
-  count                          = var.create_function ? 1 : 0
-  function_name                  = var.function_name
-  role                           = var.create_role ? aws_iam_role.lambda[0].arn : var.role_name
-  handler                        = var.handler
-  runtime                        = var.runtime
-  kms_key_arn                    = var.kms_key_arn
-  timeout                        = var.timeout
-  s3_bucket                      = local.s3_bucket
-  s3_key                         = local.s3_key
+  count = var.create_function ? 1 : 0
+
+  function_name = var.function_name
+  role          = var.create_role ? aws_iam_role.lambda[0].arn : var.role_name
+  handler       = var.handler
+  runtime       = var.runtime
+  kms_key_arn   = var.kms_key_arn
+  timeout       = var.timeout
+
+  s3_bucket         = var.s3_existing_package != null ? data.aws_s3_bucket_object.artifact[0].bucket : null
+  s3_key            = var.s3_existing_package != null ? data.aws_s3_bucket_object.artifact[0].key : null
+  s3_object_version = var.s3_existing_package != null ? data.aws_s3_bucket_object.artifact[0].version_id : null
+
   filename                       = local.filename
   memory_size                    = var.memory_size
   reserved_concurrent_executions = var.reserved_concurrent_executions
