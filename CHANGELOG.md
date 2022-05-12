@@ -1,3 +1,10 @@
+# :confetti_ball: 0.1.0 (2022-05-12T12:27:45.138Z)
+- - -
+## :hammer: Features
+* CLIC-7712 - allow also 4.x.x aws tfm providers
+* CLIC-7712 - allow also 4.x.x aws tfm providers
+- - -
+- - -
 # :confetti_ball: 0.0.6 (2022-02-15T12:11:41.602Z)
 - - -
 ## :bug: Fixes
