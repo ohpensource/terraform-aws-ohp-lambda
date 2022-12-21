@@ -144,3 +144,9 @@ variable "layers" {
   type        = list(any)
   default     = null
 }
+
+variable "snap_start" {
+  description = "(Optional) Snap start settings for low-latency startups"
+  type        = bool
+  default     = false
+}
