@@ -1,3 +1,9 @@
+# :confetti_ball: 0.1.1 (2022-12-22T11:41:35.504Z)
+- - -
+## :newspaper: Others
+* Merge pull request #25 from ohpensource/OIMP-188-snap-start
+- - -
+- - -
 # :confetti_ball: 0.1.0 (2022-05-12T12:27:45.138Z)
 - - -
 ## :hammer: Features
