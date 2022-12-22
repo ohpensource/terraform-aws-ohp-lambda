@@ -25,6 +25,14 @@ resource "aws_lambda_function" "default" {
   layers                         = var.layers
   tags                           = length(var.lambda_tags) > 0 ? merge(var.tags, var.lambda_tags) : var.tags
 
+  dynamic "snap_start" {
+    for_each = var.snap_start ? [true] : []
+    content {
+      apply_on = "PublishedVersions"
+    }
+  }
+  publish = var.snap_start
+
   dynamic "vpc_config" {
     for_each = var.vpc_subnet_ids != null && var.vpc_security_group_ids != null ? [true] : []
     content {
