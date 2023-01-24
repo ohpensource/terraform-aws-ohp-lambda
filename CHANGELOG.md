@@ -1,3 +1,9 @@
+# :confetti_ball: 0.1.2 (2023-01-24T09:15:57.329Z)
+- - -
+## :newspaper: Others
+* Merge pull request #26 from ohpensource/DB-3675
+- - -
+- - -
 # :confetti_ball: 0.1.1 (2022-12-22T11:41:35.504Z)
 - - -
 ## :newspaper: Others
