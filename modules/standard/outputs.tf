@@ -17,6 +17,10 @@ output "lambda_function_qualified_arn" {
   description = "The ARN identifying your Lambda Function Version"
   value       = element(concat(aws_lambda_function.default.*.qualified_arn, [""]), 0)
 }
+output "lambda_function_qualified_invoke_arn" {
+  description = "The Invoke ARN identifying your Lambda Function Version"
+  value       = element(concat(aws_lambda_function.default.*.qualified_invoke_arn, [""]), 0)
+}
 
 output "lambda_function_version" {
   description = "Latest published version of Lambda Function"
