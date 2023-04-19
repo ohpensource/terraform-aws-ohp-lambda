@@ -1,4 +1,4 @@
-data "aws_s3_bucket_object" "artifact" {
+data "aws_s3_object" "artifact" {
   count = var.s3_existing_package != null ? 1 : 0
 
   bucket = local.s3_bucket
@@ -15,9 +15,9 @@ resource "aws_lambda_function" "default" {
   kms_key_arn   = var.kms_key_arn
   timeout       = var.timeout
 
-  s3_bucket         = var.s3_existing_package != null ? data.aws_s3_bucket_object.artifact[0].bucket : null
-  s3_key            = var.s3_existing_package != null ? data.aws_s3_bucket_object.artifact[0].key : null
-  s3_object_version = var.s3_existing_package != null ? data.aws_s3_bucket_object.artifact[0].version_id : null
+  s3_bucket         = var.s3_existing_package != null ? data.aws_s3_object.artifact[0].bucket : null
+  s3_key            = var.s3_existing_package != null ? data.aws_s3_object.artifact[0].key : null
+  s3_object_version = var.s3_existing_package != null ? data.aws_s3_object.artifact[0].version_id : null
 
   filename         = local.filename
   source_code_hash = var.local_existing_package == null ? null : filebase64sha256(local.filename)
