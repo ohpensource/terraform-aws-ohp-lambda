@@ -14,6 +14,7 @@ resource "aws_lambda_function" "default" {
   runtime       = var.runtime
   kms_key_arn   = var.kms_key_arn
   timeout       = var.timeout
+  description   = var.lambda_description
 
   s3_bucket         = var.s3_existing_package != null ? data.aws_s3_object.artifact[0].bucket : null
   s3_key            = var.s3_existing_package != null ? data.aws_s3_object.artifact[0].key : null
