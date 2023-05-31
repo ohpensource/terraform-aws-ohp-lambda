@@ -21,7 +21,7 @@ resource "aws_lambda_function" "default" {
   s3_object_version = var.s3_existing_package != null ? data.aws_s3_object.artifact[0].version_id : null
 
   filename         = local.filename
-  source_code_hash = var.local_existing_package == null ? null : filebase64sha256(local.filename)
+  source_code_hash = var.source_code_hash != null ? var.source_code_hash : (var.local_existing_package == null ? null : filebase64sha256(local.filename))
 
   memory_size                    = var.memory_size
   reserved_concurrent_executions = var.reserved_concurrent_executions

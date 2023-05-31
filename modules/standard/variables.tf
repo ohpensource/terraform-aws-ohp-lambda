@@ -156,3 +156,9 @@ variable "snap_start" {
   type        = bool
   default     = false
 }
+
+variable "source_code_hash" {
+  description = "Hash of source code if aws_s3_object is used."
+  type        = string
+  default     = null
+}
