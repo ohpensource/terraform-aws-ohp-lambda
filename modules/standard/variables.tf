@@ -49,6 +49,12 @@ variable "lambda_tags" {
   default     = {}
 }
 
+variable "lambda_description" {
+  description = "Description of Lambda function"
+  type        = string
+  default     = ""
+}
+
 variable "kms_key_arn" {
   description = "The ARN of KMS key to use by your Lambda Function"
   type        = string
