@@ -12,6 +12,7 @@ resource "aws_lambda_function" "default" {
   role          = var.create_role ? aws_iam_role.lambda[0].arn : var.role_name
   handler       = var.handler
   runtime       = var.runtime
+  architectures = var.architectures
   kms_key_arn   = var.kms_key_arn
   timeout       = var.timeout
   description   = var.lambda_description

@@ -162,3 +162,9 @@ variable "source_code_hash" {
   type        = string
   default     = null
 }
+
+variable "architectures" {
+  description = "List of architecture, valid values are x86_64 and arm64."
+  type        = list(string)
+  default     = null
+}
