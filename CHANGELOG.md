@@ -1,3 +1,9 @@
+# :confetti_ball: 0.2.0 (2023-08-18T07:46:43.553Z)
+- - -
+## :hammer: Features
+* CRS-95 - added architecture option (#31)
+- - -
+- - -
 # :confetti_ball: 0.1.5 (2023-06-01T12:22:09.207Z)
 - - -
 ## :newspaper: Others
