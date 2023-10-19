@@ -13,9 +13,9 @@ output "lambda_function_name" {
   value       = element(concat(aws_lambda_function.default.*.function_name, [""]), 0)
 }
 
-output "lambda_function_invoke_name" {
+output "lambda_alias_name" {
   description = "The name of the Lambda Function with alias when present"
-  value       = var.create_function && var.snap_start && var.stage != null && var.stage == "dev" ? "${aws_lambda_function.default[0].function_name}:${aws_lambda_alias.latest[0].name}" : element(concat(aws_lambda_function.default.*.function_name, [""]), 0)
+  value       = element(concat(aws_lambda_alias.latest.*.name, [""]), 0)
 }
 
 output "lambda_function_qualified_arn" {
