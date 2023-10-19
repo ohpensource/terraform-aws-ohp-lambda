@@ -32,3 +32,18 @@ data "aws_iam_policy_document" "s3" {
     resources = ["arn:aws:s3:::${local.s3_bucket}", "arn:aws:s3:::${local.s3_bucket}/*"]
   }
 }
+
+data "aws_iam_policy_document" "vpc" {
+  count = var.vpc_security_group_ids != null && local.create_role ? 1 : 0
+  statement {
+    sid     = "accessVPC"
+    actions = [
+      "ec2:CreateNetworkInterface",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:DeleteNetworkInterface",
+      "ec2:AssignPrivateIpAddresses",
+      "ec2:UnassignPrivateIpAddresses"
+    ]
+    resources = ["*"]
+  }
+}
