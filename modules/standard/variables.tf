@@ -1,3 +1,13 @@
+variable "stage" {
+  type    = string
+  default = null
+
+  validation {
+    condition     = var.stage == null || contains(["dev", "tst", "acc", "prd"], var.stage)
+    error_message = "Allowed values for stage are null, \"dev\", \"tst\", \"acc\" or \"prd\"."
+  }
+}
+
 variable "create_function" {
   description = "Controls whether Lambda Function resource should be created"
   type        = bool

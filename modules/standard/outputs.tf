@@ -13,6 +13,11 @@ output "lambda_function_name" {
   value       = element(concat(aws_lambda_function.default.*.function_name, [""]), 0)
 }
 
+output "lambda_function_invoke_name" {
+  description = "The name of the Lambda Function with alias when present"
+  value       = var.create_function && var.snap_start && var.stage != null && var.stage == "dev" ? "${aws_lambda_function.default[0].function_name}:${aws_lambda_alias.latest.name}" : element(concat(aws_lambda_function.default.*.function_name, [""]), 0)
+}
+
 output "lambda_function_qualified_arn" {
   description = "The ARN identifying your Lambda Function Version"
   value       = element(concat(aws_lambda_function.default.*.qualified_arn, [""]), 0)
