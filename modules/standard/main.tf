@@ -87,8 +87,14 @@ resource "aws_iam_policy" "s3" {
   policy = local.s3_policy_arn
 }
 
+resource "aws_iam_policy" "vpc" {
+  count  = var.vpc_security_group_ids != null && local.create_role ? 1 : 0
+  name   = "${var.function_name}-vpc-policy"
+  policy = data.aws_iam_policy_document.vpc[0].json
+}
+
 resource "aws_iam_role_policy_attachment" "logs" {
-  count = local.create_role ? 1 : 0 #local.cloudwatch_policy_arn != null ? 1 : 0
+  count      = local.create_role ? 1 : 0 #local.cloudwatch_policy_arn != null ? 1 : 0
   #name       = "${local.role_name}-logs"
   role       = aws_iam_role.lambda[0].name
   policy_arn = aws_iam_policy.logs[0].arn
@@ -96,8 +102,14 @@ resource "aws_iam_role_policy_attachment" "logs" {
 }
 
 resource "aws_iam_role_policy_attachment" "s3" {
-  count = local.s3_policy_arn != null ? 1 : 0
+  count      = local.s3_policy_arn != null ? 1 : 0
   #name       = "${local.role_name}-s3"
   role       = aws_iam_role.lambda[0].name
   policy_arn = aws_iam_policy.s3[0].arn
+}
+
+resource "aws_iam_role_policy_attachment" "vpc" {
+  count      = var.vpc_security_group_ids != null && local.create_role ? 1 : 0
+  role       = aws_iam_role.lambda[0].name
+  policy_arn = aws_iam_policy.vpc[0].arn
 }
