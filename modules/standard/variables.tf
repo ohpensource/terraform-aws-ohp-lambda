@@ -1,9 +1,3 @@
-variable "create_function" {
-  description = "Controls whether Lambda Function resource should be created"
-  type        = bool
-  default     = true
-}
-
 variable "create_role" {
   description = "Controls whether Lambda Function IAM Role is created"
   type        = bool

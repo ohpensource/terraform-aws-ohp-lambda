@@ -6,8 +6,6 @@ data "aws_s3_object" "artifact" {
 }
 
 resource "aws_lambda_function" "default" {
-  count = var.create_function ? 1 : 0
-
   function_name = var.function_name
   role          = var.create_role ? aws_iam_role.lambda[0].arn : var.role_name
   handler       = var.handler
@@ -38,7 +36,7 @@ resource "aws_lambda_function" "default" {
   publish = var.snap_start
 
   dynamic "vpc_config" {
-    for_each = var.vpc_subnet_ids != null && var.vpc_security_group_ids != null ? [true] : []
+    for_each = local.create_function_in_vpc ? [true] : []
     content {
       security_group_ids = var.vpc_security_group_ids
       subnet_ids         = var.vpc_subnet_ids
@@ -61,7 +59,7 @@ resource "aws_lambda_function" "default" {
 }
 
 resource "aws_cloudwatch_log_group" "log" {
-  count             = var.create_function && var.create_cloudwatch_log_group ? 1 : 0
+  count             = var.create_cloudwatch_log_group ? 1 : 0
   name              = "/aws/lambda/${var.function_name}"
   retention_in_days = var.cloudwatch_logs_retention_in_days
   kms_key_id        = var.cloudwatch_logs_kms_key_id
@@ -69,47 +67,44 @@ resource "aws_cloudwatch_log_group" "log" {
 }
 
 resource "aws_iam_role" "lambda" {
-  count              = local.create_role ? 1 : 0
+  count              = var.create_role ? 1 : 0
   name               = local.role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role[0].json
   tags               = length(var.role_tags) > 0 ? merge(var.tags, var.role_tags) : var.tags
 }
 
 resource "aws_iam_policy" "logs" {
-  count  = local.create_role ? 1 : 0
+  count  = local.create_cloudwatch_policy ? 1 : 0
   name   = "${var.function_name}-logs-policy"
-  policy = local.cloudwatch_policy_arn
+  policy = data.aws_iam_policy_document.logs[0].json
 }
 
 resource "aws_iam_policy" "s3" {
-  count  = local.s3_policy_arn != null ? 1 : 0
+  count  = local.create_s3_policy ? 1 : 0
   name   = "${var.function_name}-s3-policy"
-  policy = local.s3_policy_arn
+  policy = data.aws_iam_policy_document.s3[0].json
 }
 
 resource "aws_iam_policy" "vpc" {
-  count  = var.vpc_security_group_ids != null && local.create_role ? 1 : 0
+  count  = local.create_vpc_policy ? 1 : 0
   name   = "${var.function_name}-vpc-policy"
   policy = data.aws_iam_policy_document.vpc[0].json
 }
 
 resource "aws_iam_role_policy_attachment" "logs" {
-  count      = local.create_role ? 1 : 0 #local.cloudwatch_policy_arn != null ? 1 : 0
-  #name       = "${local.role_name}-logs"
+  count      = local.create_cloudwatch_policy ? 1 : 0
   role       = aws_iam_role.lambda[0].name
   policy_arn = aws_iam_policy.logs[0].arn
-
 }
 
 resource "aws_iam_role_policy_attachment" "s3" {
-  count      = local.s3_policy_arn != null ? 1 : 0
-  #name       = "${local.role_name}-s3"
+  count      = local.create_s3_policy != null ? 1 : 0
   role       = aws_iam_role.lambda[0].name
   policy_arn = aws_iam_policy.s3[0].arn
 }
 
 resource "aws_iam_role_policy_attachment" "vpc" {
-  count      = var.vpc_security_group_ids != null && local.create_role ? 1 : 0
+  count      = local.create_vpc_policy ? 1 : 0
   role       = aws_iam_role.lambda[0].name
   policy_arn = aws_iam_policy.vpc[0].arn
 }

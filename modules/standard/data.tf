@@ -2,7 +2,7 @@ data "aws_caller_identity" "current" {}
 data "aws_region" "current" {}
 
 data "aws_iam_policy_document" "assume_role" {
-  count = local.create_role ? 1 : 0
+  count = var.create_role ? 1 : 0
 
   statement {
     effect  = "Allow"
@@ -16,7 +16,7 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 data "aws_iam_policy_document" "logs" {
-  count = local.create_role && var.create_cloudwatch_log_group ? 1 : 0
+  count = local.create_cloudwatch_policy ? 1 : 0
   statement {
     effect    = "Allow"
     actions   = ["logs:CreateLogGroup", "logs:CreateLogStream", "logs:PutLogEvents"]
@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "logs" {
 }
 
 data "aws_iam_policy_document" "s3" {
-  count = var.s3_existing_package != null && local.create_role ? 1 : 0
+  count = local.create_s3_policy ? 1 : 0
   statement {
     effect    = "Allow"
     actions   = ["s3:PutObject", "s3:Get*", "s3:List*"]
@@ -34,7 +34,7 @@ data "aws_iam_policy_document" "s3" {
 }
 
 data "aws_iam_policy_document" "vpc" {
-  count = var.vpc_security_group_ids != null && local.create_role ? 1 : 0
+  count = local.create_vpc_policy ? 1 : 0
   statement {
     sid     = "accessVPC"
     actions = [
