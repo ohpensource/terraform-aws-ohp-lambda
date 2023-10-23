@@ -1,3 +1,9 @@
+# :confetti_ball: 0.3.0 (2023-10-23T08:20:05.950Z)
+- - -
+## :hammer: Features
+* CMM-21776 - create vpc policy (#34)
+- - -
+- - -
 # :confetti_ball: 0.2.0 (2023-08-18T07:46:43.553Z)
 - - -
 ## :hammer: Features
