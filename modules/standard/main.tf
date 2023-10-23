@@ -114,9 +114,9 @@ resource "aws_iam_role_policy_attachment" "vpc" {
   policy_arn = aws_iam_policy.vpc[0].arn
 }
 
-resource "aws_lambda_alias" "latest" {
-  count            = var.create_function && var.snap_start && var.stage != null && var.stage == "dev" ? 1 : 0
-  name             = "LATEST"
+resource "aws_lambda_alias" "default" {
+  count            = var.create_function && var.snap_start ? 1 : 0
+  name             = "default"
   function_name    = aws_lambda_function.default[0].arn
-  function_version = "$LATEST"
+  function_version = aws_lambda_function.default[0].version
 }
