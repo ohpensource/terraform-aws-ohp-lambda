@@ -1,3 +1,9 @@
+# :confetti_ball: 1.0.0 (2023-10-23T12:04:27.816Z)
+- - -
+## :boom: BREAKING CHANGES
+* CMM-21776 - remove create_function variable which is not used by anyone (#35)
+- - -
+- - -
 # :confetti_ball: 0.3.0 (2023-10-23T08:20:05.950Z)
 - - -
 ## :hammer: Features
