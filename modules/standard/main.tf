@@ -113,10 +113,3 @@ resource "aws_iam_role_policy_attachment" "vpc" {
   role       = aws_iam_role.lambda[0].name
   policy_arn = aws_iam_policy.vpc[0].arn
 }
-
-resource "aws_lambda_alias" "default" {
-  count            = var.create_function && var.snap_start ? 1 : 0
-  name             = "default"
-  function_name    = aws_lambda_function.default[0].arn
-  function_version = aws_lambda_function.default[0].version
-}
