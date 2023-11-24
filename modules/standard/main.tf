@@ -25,7 +25,7 @@ resource "aws_lambda_function" "default" {
   memory_size                    = var.memory_size
   reserved_concurrent_executions = var.reserved_concurrent_executions
   layers                         = var.layers
-  tags                           = length(var.lambda_tags) > 0 ? merge(var.tags, var.lambda_tags) : var.tags
+  tags                           = var.tags
 
   dynamic "snap_start" {
     for_each = var.snap_start ? [true] : []
@@ -63,14 +63,14 @@ resource "aws_cloudwatch_log_group" "log" {
   name              = "/aws/lambda/${var.function_name}"
   retention_in_days = var.cloudwatch_logs_retention_in_days
   kms_key_id        = var.cloudwatch_logs_kms_key_id
-  tags              = length(var.cloudwatch_tags) > 0 ? merge(var.tags, var.cloudwatch_tags) : var.tags
+  tags              = var.tags
 }
 
 resource "aws_iam_role" "lambda" {
   count              = var.create_role ? 1 : 0
   name               = local.role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role[0].json
-  tags               = length(var.role_tags) > 0 ? merge(var.tags, var.role_tags) : var.tags
+  tags               = var.tags
 }
 
 resource "aws_iam_policy" "logs" {
@@ -107,4 +107,11 @@ resource "aws_iam_role_policy_attachment" "vpc" {
   count      = local.create_vpc_policy ? 1 : 0
   role       = aws_iam_role.lambda[0].name
   policy_arn = aws_iam_policy.vpc[0].arn
+}
+
+resource "aws_lambda_alias" "default" {
+  count            = var.snap_start ? 1 : 0
+  name             = "default"
+  function_name    = aws_lambda_function.default.arn
+  function_version = aws_lambda_function.default.version
 }

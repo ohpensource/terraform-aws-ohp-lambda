@@ -67,3 +67,8 @@ output "lambda_cloudwatch_log_group_name" {
   description = "The name of the Cloudwatch Log Group"
   value       = element(concat(aws_cloudwatch_log_group.log.*.name, [""]), 0)
 }
+
+output "lambda_default_alias" {
+  description = "Default lambda alias name"
+  value       = element(concat(aws_lambda_alias.default.*.name, [""]), 0)
+}
