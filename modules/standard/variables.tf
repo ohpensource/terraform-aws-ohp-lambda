@@ -37,12 +37,6 @@ variable "lambda_role" {
   default     = ""
 }
 
-variable "lambda_tags" {
-  description = "A map of tags to assign to the Lambda Function"
-  type        = map(string)
-  default     = {}
-}
-
 variable "lambda_description" {
   description = "Description of Lambda function"
   type        = string
@@ -97,12 +91,6 @@ variable "tags" {
   default     = {}
 }
 
-variable "role_tags" {
-  description = "A map of tags to assign to IAM role"
-  type        = map(string)
-  default     = {}
-}
-
 variable "s3_existing_package" {
   description = "The S3 bucket object with keys bucket, key pointing to an existing zip-file to use"
   type        = map(string)
@@ -125,12 +113,6 @@ variable "cloudwatch_logs_retention_in_days" {
   description = "Specifies the number of days you want to retain log events in the specified log group. Possible values are: 1, 3, 5, 7, 14, 30, 60, 90, 120, 150, 180, 365, 400, 545, 731, 1827, and 3653."
   type        = number
   default     = 90
-}
-
-variable "cloudwatch_tags" {
-  description = "A map of tags to assign to cloudwatch log"
-  type        = map(string)
-  default     = {}
 }
 
 variable "cloudwatch_logs_kms_key_id" {

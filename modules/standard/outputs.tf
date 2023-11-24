@@ -49,21 +49,31 @@ output "lambda_function_source_code_size" {
 }
 
 output "lambda_role_arn" {
+  count       = var.create_role ? 1 : 0
   description = "The ARN of the IAM role created for the Lambda Function"
-  value       = element(concat(aws_iam_role.lambda.*.arn, [""]), 0)
+  value       = aws_iam_policy.logs[0].arn
 }
 
 output "lambda_role_name" {
+  count       = var.create_role ? 1 : 0
   description = "The name of the IAM role created for the Lambda Function"
-  value       = element(concat(aws_iam_role.lambda.*.name, [""]), 0)
+  value       = aws_iam_policy.logs[0].name
 }
 
 output "lambda_cloudwatch_log_group_arn" {
+  count       = var.create_cloudwatch_log_group ? 1 : 0
   description = "The ARN of the Cloudwatch Log Group"
-  value       = element(concat(aws_cloudwatch_log_group.log.*.arn, [""]), 0)
+  value       = aws_cloudwatch_log_group.log[0].arn
 }
 
 output "lambda_cloudwatch_log_group_name" {
+  count       = var.create_cloudwatch_log_group ? 1 : 0
   description = "The name of the Cloudwatch Log Group"
-  value       = element(concat(aws_cloudwatch_log_group.log.*.name, [""]), 0)
+  value       = aws_cloudwatch_log_group.log[0].name
+}
+
+output "lambda_default_alias" {
+  count       = var.snap_start ? 1 : 0
+  description = "Default lambda alias name"
+  value       = aws_lambda_alias.default.name
 }

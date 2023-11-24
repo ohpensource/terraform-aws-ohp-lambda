@@ -13,17 +13,47 @@
 
 ## Description
 
-Describe what your module does here.
+AWS Lambda module for deploying a lambda function.
 
 ## Modules
 
 * standard
 
-## Documentation
-
-Describe how to use your module here.
-[confluence](https://ohpendev.atlassian.net/wiki/spaces/CCE/pages/2062320795/Terraform+Modules)
-
 ## Usage
 
-See examples folder
+```hcl
+module "trans_union_stub" {
+  count = var.deploy_stubs ? 1 : 0
+
+  source                      = "git::https://github.com/ohpensource/terraform-aws-ohp-lambda.git//modules//standard?ref=v0.1.5"
+  create_role                 = true
+  function_name               = "${local.resource_name_prefix}-trans-union-stub-${var.deployment}"
+  handler                     = "com.ohpen.close.kyc.stubs.transunion.TransUnionStub"
+  runtime                     = local.default_java_runtime
+  timeout                     = local.default_timeout
+  create_cloudwatch_log_group = true
+  memory_size                 = local.default_memory_size
+  snap_start                  = true
+
+  s3_existing_package = {
+    bucket = local.artifacts_bucket
+    key    = "${local.artifact_key_prefix}/close-kyc-stubs-trans-union/${local.software_version}/close-kyc-stubs-trans-union-${local.software_version}.jar"
+  }
+
+  tags = {
+    ServiceVersion = var.software_version
+    Component      = "trans-union-stub"
+  }
+
+  vpc_subnet_ids         = local.vpc_subnet_ids
+  vpc_security_group_ids = [aws_security_group.default.id]
+
+  environment_variables = {
+    stage             = var.stage
+    domain            = local.domain
+    deployment        = var.deployment
+    JAVA_TOOL_OPTIONS = local.java_tools_options
+  }
+}
+
+```
