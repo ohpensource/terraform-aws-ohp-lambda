@@ -1,3 +1,9 @@
+# :confetti_ball: 2.0.0 (2023-11-24T11:30:58.440Z)
+- - -
+## :boom: BREAKING CHANGES
+* break: [CMM-21776](https://ohpen.atlassian.net/browse/CMM-21776) - introduced aws alias, removed unused files and properties
+- - -
+- - -
 # :confetti_ball: 1.0.0 (2023-10-23T12:04:27.816Z)
 - - -
 ## :boom: BREAKING CHANGES
