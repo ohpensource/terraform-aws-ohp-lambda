@@ -144,3 +144,9 @@ variable "architectures" {
   type        = list(string)
   default     = null
 }
+
+variable "deployment_timeout" {
+  description = "The amount of time that AWS Lambda spends to update the function code. Unit of time should be included in value, example: 10m"
+  type        = string
+  default     = null
+}
