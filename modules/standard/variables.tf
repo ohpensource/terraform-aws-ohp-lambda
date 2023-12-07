@@ -144,3 +144,9 @@ variable "architectures" {
   type        = list(string)
   default     = null
 }
+
+variable "deployment_timeout" {
+  description = "The amount of time in minutes that AWS Lambda spends to update the function code."
+  type        = number
+  default     = null
+}

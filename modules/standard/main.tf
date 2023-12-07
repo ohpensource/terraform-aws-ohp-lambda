@@ -56,6 +56,13 @@ resource "aws_lambda_function" "default" {
       variables = var.environment_variables
     }
   }
+
+  dynamic "timeouts" {
+    for_each = var.deployment_timeout == null ? [] : [true]
+    content {
+      create = var.deployment_timeout
+    }
+  }
 }
 
 resource "aws_cloudwatch_log_group" "log" {
