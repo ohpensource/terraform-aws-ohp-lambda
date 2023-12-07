@@ -146,7 +146,7 @@ variable "architectures" {
 }
 
 variable "deployment_timeout" {
-  description = "The amount of time in minutes that AWS Lambda spends to update the function code."
-  type        = number
+  description = "The amount of time that AWS Lambda spends to update the function code. Unit of time should be included in value, example: 10m"
+  type        = string
   default     = null
 }
