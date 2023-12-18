@@ -1,3 +1,9 @@
+# :confetti_ball: 2.0.1 (2023-12-18T09:19:34.118Z)
+- - -
+## :newspaper: Others
+* Merge pull request #38 from ohpensource/[TENDATA-762](https://ohpen.atlassian.net/browse/TENDATA-762)-fixes
+- - -
+- - -
 # :confetti_ball: 2.0.0 (2023-11-24T11:30:58.440Z)
 - - -
 ## :boom: BREAKING CHANGES
