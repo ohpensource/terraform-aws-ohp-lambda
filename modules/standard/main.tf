@@ -98,7 +98,7 @@ resource "aws_iam_role_policy_attachment" "logs" {
 }
 
 resource "aws_iam_role_policy_attachment" "s3" {
-  count      = local.create_s3_policy != null ? 1 : 0
+  count      = local.create_s3_policy ? 1 : 0
   role       = aws_iam_role.lambda[0].name
   policy_arn = aws_iam_policy.s3[0].arn
 }
