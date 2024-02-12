@@ -47,7 +47,7 @@ module "trans_union_stub" {
     stage             = var.stage
     domain            = local.domain
     deployment        = var.deployment
-    JAVA_TOOL_OPTIONS = local.java_tools_options
+    JAVA_TOOL_OPTIONS = local.java_options
   }
 }
 ```
@@ -78,7 +78,7 @@ module "trans_union_stub" {
     stage             = var.stage
     domain            = local.domain
     deployment        = var.deployment
-    JAVA_TOOL_OPTIONS = local.java_tools_options
+    JDK_JAVA_OPTIONS  = local.java_options
   }
 }
 ```
