@@ -98,12 +98,6 @@ variable "cloudwatch_logs_kms_key_id" {
   default     = null
 }
 
-variable "snap_start" {
-  description = "(Optional) Snap start settings for low-latency startups"
-  type        = bool
-  default     = false
-}
-
 variable "architectures" {
   description = "List of architecture, valid values are x86_64 and arm64."
   type        = list(string)

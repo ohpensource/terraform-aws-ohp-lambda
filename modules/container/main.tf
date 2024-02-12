@@ -14,14 +14,6 @@ resource "aws_lambda_function" "default" {
   reserved_concurrent_executions = var.reserved_concurrent_executions
   tags                           = var.tags
 
-  dynamic "snap_start" {
-    for_each = var.snap_start ? [true] : []
-    content {
-      apply_on = "PublishedVersions"
-    }
-  }
-  publish = var.snap_start
-
   dynamic "vpc_config" {
     for_each = local.create_function_in_vpc ? [true] : []
     content {
@@ -82,11 +74,4 @@ resource "aws_iam_role_policy_attachment" "vpc" {
   count      = local.create_vpc_policy ? 1 : 0
   role       = aws_iam_role.lambda[0].name
   policy_arn = aws_iam_policy.vpc[0].arn
-}
-
-resource "aws_lambda_alias" "default" {
-  count            = var.snap_start ? 1 : 0
-  name             = "default"
-  function_name    = aws_lambda_function.default.arn
-  function_version = aws_lambda_function.default.version
 }
