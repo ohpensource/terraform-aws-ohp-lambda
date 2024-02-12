@@ -12,15 +12,20 @@ jobs:
           fetch-depth: 0
       - uses: ohpensource/ensure-conventional-commits-gh-action@main
         name: Ensure conventional commits
-      - uses: ohpensource/ensure-commits-have-ticket-gh-action@main
+      - uses: ohpen/ensure-commits-have-ticket-gh-action@main
         name: Ensure Jira ticket in all commits
         with:
           base-branch: $GITHUB_BASE_REF
           pr-branch: $GITHUB_HEAD_REF
-      - uses: ohpensource/terraform-validate-gh-action@main
+      - uses: ohpen/terraform-validate-gh-action@main
         name: Validate terraform
         with:
           terraform-folder: "modules/standard"
+          use-backend: "false"
+      - uses: ohpen/terraform-validate-gh-action@main
+        name: Validate terraform
+        with:
+          terraform-folder: "modules/container"
           use-backend: "false"
       - uses: aquasecurity/tfsec-action@v1.0.3
         name: Analyse terraform security
