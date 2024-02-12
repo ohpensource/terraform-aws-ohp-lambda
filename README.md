@@ -63,7 +63,6 @@ module "trans_union_stub" {
   timeout                     = local.default_timeout
   create_cloudwatch_log_group = true
   memory_size                 = local.default_memory_size
-  snap_start                  = true
 
   container_image_uri = "111111111111111.dkr.ecr.eu-west-1.amazonaws.com/project/module:latest"
 
