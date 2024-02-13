@@ -1,3 +1,9 @@
+# :confetti_ball: 2.0.2 (2024-02-13T08:57:23.916Z)
+- - -
+## :newspaper: Others
+* Merge pull request #39 from ohpensource/[ATEAM-144](https://ohpen.atlassian.net/browse/ATEAM-144)-container-terraform-module
+- - -
+- - -
 # :confetti_ball: 2.0.1 (2023-12-18T09:19:34.118Z)
 - - -
 ## :newspaper: Others
