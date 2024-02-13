@@ -22,5 +22,10 @@ jobs:
         with:
           terraform-folder: "modules/standard"
           use-backend: "false"
+      - uses: ohpensource/terraform-validate-gh-action@main
+        name: Validate terraform
+        with:
+          terraform-folder: "modules/container"
+          use-backend: "false"
       - uses: aquasecurity/tfsec-action@v1.0.3
         name: Analyse terraform security
